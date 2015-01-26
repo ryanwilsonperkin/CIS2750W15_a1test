@@ -11,3 +11,9 @@ Testing
 3. Run `make build` to compile.
 4. Run `make test` to test the library.
 5. Run `make clean` to cleanup.
+
+Common Errors
+---
+
+- "No rule to make target 'ParameterManager.h', needed by 'build'. Stop.": You have not copied ParameterManager.h into the root of this repository.
+- "No rule to make target 'libpm.a', needed by 'build'. Stop.": You have not copied libpm.a into the root of this repository.
