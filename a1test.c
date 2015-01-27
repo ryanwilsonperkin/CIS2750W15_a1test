@@ -8,132 +8,92 @@ int num_success = 0;
 
 int test_pm_create() {
         ParameterManager *pm;
-        if (!(pm = PM_create(DEFAULT_CREATE_VAL))) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        return 0;
 }
 
 int test_pm_create_twice() {
         ParameterManager *pm1, *pm2;
-        if (!(pm1 = PM_create(DEFAULT_CREATE_VAL))) {
-                return 1;
-        }else if  (!(pm2 = PM_create(DEFAULT_CREATE_VAL))) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm1 = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm2 = PM_create(DEFAULT_CREATE_VAL));
+        return 0;
 }
 
 int test_pm_destroy() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_destroy(pm)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_destroy(pm));
+        return 0;
 }
 
 int test_pm_manage_int_optional() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_manage(pm, "name", INT_TYPE, 0)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
+        return 0;
 }
 
 int test_pm_manage_int_required() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_manage(pm, "name", INT_TYPE, 1)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        return 0;
 }
 
 int test_pm_manage_real_optional() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_manage(pm, "name", REAL_TYPE, 0)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", REAL_TYPE, 0));
+        return 0;
 }
 
 int test_pm_manage_real_required() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_manage(pm, "name", REAL_TYPE, 1)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", REAL_TYPE, 1));
+        return 0;
 }
 
 int test_pm_manage_boolean_optional() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_manage(pm, "name", BOOLEAN_TYPE, 0)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 0));
+        return 0;
 }
 
 int test_pm_manage_boolean_required() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_manage(pm, "name", BOOLEAN_TYPE, 1)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 1));
+        return 0;
 }
 
 int test_pm_manage_string_optional() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_manage(pm, "name", STRING_TYPE, 0)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", STRING_TYPE, 0));
+        return 0;
 }
 
 int test_pm_manage_string_required() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_manage(pm, "name", STRING_TYPE, 1)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
+        return 0;
 }
 
 int test_pm_manage_list_optional() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_manage(pm, "name", LIST_TYPE, 0)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", LIST_TYPE, 0));
+        return 0;
 }
 
 int test_pm_manage_list_required() {
         ParameterManager *pm;
-        pm = PM_create(DEFAULT_CREATE_VAL);
-        if (!PM_manage(pm, "name", LIST_TYPE, 1)) {
-                return 1;
-        } else {
-                return 0;
-        }
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
+        return 0;
 }
 
 FILE *file_with_contents(char *contents) {
