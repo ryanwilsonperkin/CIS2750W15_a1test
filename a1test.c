@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "ParameterManager.h"
-
-#define TEST_FILENAME "TEMP"
-#define DEFAULT_CREATE_VAL 10
+#include "a1test.h"
 
 int num_tests = 0;
 int num_fail = 0;
@@ -136,6 +134,13 @@ int test_pm_manage_list_required() {
         } else {
                 return 0;
         }
+}
+
+FILE *file_with_contents(char *contents) {
+        FILE *fp = fopen(TEST_FILENAME, "w");
+        fprintf(fp, contents);
+        fclose(fp);
+        return fopen(TEST_FILENAME, "r");
 }
 
 void run_test(int (*fn)(), char *fn_name) {
