@@ -18,17 +18,20 @@ int test_create_pm() {
 
 void run_test(int (*fn)(), char *fn_name) {
         num_tests++;
-        printf("===TEST: %s\n", fn_name);
+        printf("\n[a1test][TEST]: %s\n", fn_name);
         if ((*fn)()) {
                 num_fail++;
-                printf("===FAILURE: %s\n", fn_name);
+                printf("\n[a1test][FAILURE]: %s\n", fn_name);
         } else {
                 num_success++;
-                printf("===SUCCESS: %s\n", fn_name);
+                printf("\n[a1test][SUCCESS]: %s\n", fn_name);
         }
 }
 
 int main(int argc, char **argv) {
         run_test(test_create_pm, "test_basic");
+        printf("\n[a1test] Number of tests run: %d\n", num_tests);
+        printf("[a1test] Number of successes: %d\n", num_success);
+        printf("[a1test] Number of failures: %d\n", num_fail);
         return 0;
 }
