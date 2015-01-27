@@ -4,6 +4,8 @@
 #define TEST_FILENAME "TEMP"
 #define DEFAULT_CREATE_VAL 10
 
+#define ASSERT(cond) if (!(cond)) return 1
+
 FILE *file_with_contents(char *contents);
 void run_test(int (*fn)(), char *fn_name);
 
