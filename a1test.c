@@ -29,7 +29,7 @@ void run_test(int (*fn)(), char *fn_name) {
 }
 
 int main(int argc, char **argv) {
-        run_test(test_create_pm, "test_basic");
+        run_test(test_create_pm, "test_create_pm");
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
         printf("[a1test] Number of failures: %d\n", num_fail);
