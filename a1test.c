@@ -7,7 +7,7 @@ int num_tests = 0;
 int num_fail = 0;
 int num_success = 0;
 
-int test_create_pm() {
+int test_pm_create() {
         ParameterManager *pm;
         if (!(pm = PM_create(10))) {
                 return 1;
@@ -16,7 +16,7 @@ int test_create_pm() {
         }
 }
 
-int test_create_pm_twice() {
+int test_pm_create_twice() {
         ParameterManager *pm1, *pm2;
         if (!(pm1 = PM_create(10))) {
                 return 1;
@@ -27,7 +27,7 @@ int test_create_pm_twice() {
         }
 }
 
-int test_destroy_pm() {
+int test_pm_destroy() {
         ParameterManager *pm;
         pm = PM_create(10);
         if (!PM_destroy(pm)) {
@@ -50,9 +50,9 @@ void run_test(int (*fn)(), char *fn_name) {
 }
 
 int main(int argc, char **argv) {
-        run_test(test_create_pm, "test_create_pm");
-        run_test(test_create_pm_twice, "test_create_pm_twice");
-        run_test(test_destroy_pm, "test_destroy_pm");
+        run_test(test_pm_create, "test_pm_create");
+        run_test(test_pm_create_twice, "test_pm_create_twice");
+        run_test(test_pm_destroy, "test_pm_destroy");
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
         printf("[a1test] Number of failures: %d\n", num_fail);
