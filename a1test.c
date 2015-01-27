@@ -2,6 +2,7 @@
 #include "ParameterManager.h"
 
 #define TEST_FILENAME "TEMP"
+#define DEFAULT_CREATE_VAL 10
 
 int num_tests = 0;
 int num_fail = 0;
@@ -9,7 +10,7 @@ int num_success = 0;
 
 int test_pm_create() {
         ParameterManager *pm;
-        if (!(pm = PM_create(10))) {
+        if (!(pm = PM_create(DEFAULT_CREATE_VAL))) {
                 return 1;
         } else {
                 return 0;
@@ -18,9 +19,9 @@ int test_pm_create() {
 
 int test_pm_create_twice() {
         ParameterManager *pm1, *pm2;
-        if (!(pm1 = PM_create(10))) {
+        if (!(pm1 = PM_create(DEFAULT_CREATE_VAL))) {
                 return 1;
-        }else if  (!(pm2 = PM_create(10))) {
+        }else if  (!(pm2 = PM_create(DEFAULT_CREATE_VAL))) {
                 return 1;
         } else {
                 return 0;
@@ -29,7 +30,7 @@ int test_pm_create_twice() {
 
 int test_pm_destroy() {
         ParameterManager *pm;
-        pm = PM_create(10);
+        pm = PM_create(DEFAULT_CREATE_VAL);
         if (!PM_destroy(pm)) {
                 return 1;
         } else {
