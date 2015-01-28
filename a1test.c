@@ -34,24 +34,10 @@ int test_pm_manage_int_optional() {
         return 0;
 }
 
-int test_pm_manage_int_required() {
-        ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
-        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
-        return 0;
-}
-
 int test_pm_manage_real_optional() {
         ParameterManager *pm;
         ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
         ASSERT(PM_manage(pm, "name", REAL_TYPE, 0));
-        return 0;
-}
-
-int test_pm_manage_real_required() {
-        ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
-        ASSERT(PM_manage(pm, "name", REAL_TYPE, 1));
         return 0;
 }
 
@@ -62,13 +48,6 @@ int test_pm_manage_boolean_optional() {
         return 0;
 }
 
-int test_pm_manage_boolean_required() {
-        ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
-        ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 1));
-        return 0;
-}
-
 int test_pm_manage_string_optional() {
         ParameterManager *pm;
         ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
@@ -76,17 +55,38 @@ int test_pm_manage_string_optional() {
         return 0;
 }
 
-int test_pm_manage_string_required() {
-        ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
-        ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
-        return 0;
-}
-
 int test_pm_manage_list_optional() {
         ParameterManager *pm;
         ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 0));
+        return 0;
+}
+
+int test_pm_manage_int_required() {
+        ParameterManager *pm;
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        return 0;
+}
+
+int test_pm_manage_real_required() {
+        ParameterManager *pm;
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", REAL_TYPE, 1));
+        return 0;
+}
+
+int test_pm_manage_boolean_required() {
+        ParameterManager *pm;
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 1));
+        return 0;
+}
+
+int test_pm_manage_string_required() {
+        ParameterManager *pm;
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
         return 0;
 }
 
@@ -111,20 +111,6 @@ int test_pm_parse_int_optional() {
         return 0;
 }
 
-int test_pm_parse_int_required() {
-        ParameterManager *pm;
-        FILE *fp;
-        char *contents = "name = 1;";
-        fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
-        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
-        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
-        ASSERT(PM_hasValue(pm, "name"));
-        ASSERT(PM_getValue(pm, "name").int_val == 1);
-        fclose(fp);
-        return 0;
-}
-
 int test_pm_parse_real_optional() {
         ParameterManager *pm;
         FILE *fp;
@@ -132,20 +118,6 @@ int test_pm_parse_real_optional() {
         fp = file_with_contents(contents);
         ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
         ASSERT(PM_manage(pm, "name", REAL_TYPE, 0));
-        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
-        ASSERT(PM_hasValue(pm, "name"));
-        ASSERT((PM_getValue(pm, "name").real_val - 1.1) <= REAL_THRESHOLD);
-        fclose(fp);
-        return 0;
-}
-
-int test_pm_parse_real_required() {
-        ParameterManager *pm;
-        FILE *fp;
-        char *contents = "name = 1.1;";
-        fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
-        ASSERT(PM_manage(pm, "name", REAL_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
         ASSERT((PM_getValue(pm, "name").real_val - 1.1) <= REAL_THRESHOLD);
@@ -166,19 +138,6 @@ int test_pm_parse_boolean_optional() {
         return 0;
 }
 
-int test_pm_parse_boolean_required() {
-        ParameterManager *pm;
-        FILE *fp;
-        char *contents = "name = true;";
-        fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
-        ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 1));
-        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
-        ASSERT(PM_hasValue(pm, "name"));
-        ASSERT(PM_getValue(pm, "name").bool_val == true);
-        return 0;
-}
-
 int test_pm_parse_string_optional() {
         ParameterManager *pm;
         FILE *fp;
@@ -186,20 +145,6 @@ int test_pm_parse_string_optional() {
         fp = file_with_contents(contents);
         ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
         ASSERT(PM_manage(pm, "name", STRING_TYPE, 0));
-        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
-        ASSERT(PM_hasValue(pm, "name"));
-        ASSERT(PM_getValue(pm, "name").str_val != NULL);
-        ASSERT(strcmp(PM_getValue(pm, "name").str_val, "string") == 0);
-        return 0;
-}
-
-int test_pm_parse_string_required() {
-        ParameterManager *pm;
-        FILE *fp;
-        char *contents = "name = \"string\";";
-        fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
-        ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
         ASSERT(PM_getValue(pm, "name").str_val != NULL);
@@ -220,6 +165,61 @@ int test_pm_parse_list_optional() {
         ASSERT(PM_getValue(pm, "name").list_val != NULL);
         ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
         ASSERT(strcmp(str, "string") == 0);
+        return 0;
+}
+
+int test_pm_parse_int_required() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = 1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 1);
+        fclose(fp);
+        return 0;
+}
+
+int test_pm_parse_real_required() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = 1.1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", REAL_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT((PM_getValue(pm, "name").real_val - 1.1) <= REAL_THRESHOLD);
+        fclose(fp);
+        return 0;
+}
+
+int test_pm_parse_boolean_required() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = true;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").bool_val == true);
+        return 0;
+}
+
+int test_pm_parse_string_required() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = \"string\";";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").str_val != NULL);
+        ASSERT(strcmp(PM_getValue(pm, "name").str_val, "string") == 0);
         return 0;
 }
 
