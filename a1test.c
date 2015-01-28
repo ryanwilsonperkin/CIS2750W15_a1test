@@ -735,6 +735,21 @@ int test_real_no_decimal() {
         return 0;
 }
 
+int test_boolean_false() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = false;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").bool_val == false);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 FILE *file_with_contents(char *contents) {
         FILE *fp = fopen(TEST_FILENAME, "w");
         fprintf(fp, contents);
@@ -826,6 +841,9 @@ int main(int argc, char **argv) {
 
         /* REAL_TYPE tests */
         run_test(test_real_no_decimal, "test_real_no_decimal");
+
+        /* BOOLEAN_TYPE tests */
+        run_test(test_boolean_false, "test_boolean_false");
 
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);

@@ -97,4 +97,7 @@ int test_int_negative();
 /* REAL_TYPE tests */
 int test_real_no_decimal();
 
+/* BOOLEAN_TYPE tests */
+int test_boolean_false();
+
 #endif  /* A1TEST_A1TEST_H */
