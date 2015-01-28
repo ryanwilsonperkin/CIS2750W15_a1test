@@ -90,11 +90,11 @@ int test_whitespace_less();
 int test_whitespace_none();
 int test_whitespace_multiline();
 
-/* INT_VAL tests */
+/* INT_TYPE tests */
 int test_int_zero();
 int test_int_negative();
 
-/* REAL_VAL tests */
+/* REAL_TYPE tests */
 int test_real_no_decimal();
 
 #endif  /* A1TEST_A1TEST_H */

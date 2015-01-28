@@ -820,11 +820,11 @@ int main(int argc, char **argv) {
         run_test(test_whitespace_none, "test_whitespace_none");
         run_test(test_whitespace_multiline, "test_whitespace_multiline");
         
-        /* INT_VAL tests */
+        /* INT_TYPE tests */
         run_test(test_int_zero, "test_int_zero");
         run_test(test_int_negative, "test_int_negative");
 
-        /* REAL_VAL tests */
+        /* REAL_TYPE tests */
         run_test(test_real_no_decimal, "test_real_no_decimal");
 
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
