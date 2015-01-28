@@ -22,6 +22,7 @@
 
 /* Test framework methods */
 FILE *file_with_contents(char *contents);
+int fork_test(int (*fn)());
 void run_test(int (*fn)(), char *fn_name);
 
 /* Main functionality tests */

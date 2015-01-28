@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
 #include "ParameterManager.h"
 #include "a1test.h"
 
@@ -1035,10 +1038,29 @@ FILE *file_with_contents(char *contents) {
         return fopen(TEST_FILENAME, "r");
 }
 
+int fork_test(int (*fn)()) {
+        int test_val;
+        int status;
+        pid_t proc_id;
+
+        /* Test runs in forked child process. */
+        proc_id = fork();
+        if (proc_id == 0) {
+                test_val = (*fn)();
+                exit(test_val);
+        } else if (proc_id > 0) {
+                wait(&status);
+                return status;  /* In the event of a segfault, status will be non-zero. */
+        } else {
+                fprintf(stderr, "[a1test] Failed to fork test process. Exiting.\n");
+                exit(1);
+        }
+}
+
 void run_test(int (*fn)(), char *fn_name) {
         num_tests++;
         printf("\n[a1test][TEST]: %s\n", fn_name);
-        if ((*fn)()) {
+        if (fork_test(fn)) {
                 num_fail++;
                 printf("\n[a1test][FAILURE]: %s\n", fn_name);
         } else {
