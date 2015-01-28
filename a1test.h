@@ -12,9 +12,8 @@ FILE *file_with_contents(char *contents);
 void run_test(int (*fn)(), char *fn_name);
 
 /* Main functionality tests */
-int test_pm_create();
-int test_pm_create_twice();
-int test_pm_destroy();
+int test_pm_create_destroy();
+int test_pm_create_destroy_twice();
 
 /* PM_manage optional value tests */
 int test_pm_manage_int_optional();

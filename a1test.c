@@ -7,23 +7,19 @@ int num_tests = 0;
 int num_fail = 0;
 int num_success = 0;
 
-int test_pm_create() {
-        ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
-        return 0;
-}
-
-int test_pm_create_twice() {
-        ParameterManager *pm1, *pm2;
-        ASSERT(pm1 = PM_create(DEFAULT_CREATE_VAL));
-        ASSERT(pm2 = PM_create(DEFAULT_CREATE_VAL));
-        return 0;
-}
-
-int test_pm_destroy() {
+int test_pm_create_destroy() {
         ParameterManager *pm;
         ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
         ASSERT(PM_destroy(pm));
+        return 0;
+}
+
+int test_pm_create_destroy_twice() {
+        ParameterManager *pm1, *pm2;
+        ASSERT(pm1 = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm2 = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_destroy(pm1));
+        ASSERT(PM_destroy(pm2));
         return 0;
 }
 
@@ -265,9 +261,8 @@ void run_test(int (*fn)(), char *fn_name) {
 }
 
 int main(int argc, char **argv) {
-        run_test(test_pm_create, "test_pm_create");
-        run_test(test_pm_create_twice, "test_pm_create_twice");
-        run_test(test_pm_destroy, "test_pm_destroy");
+        run_test(test_pm_create_destroy, "test_pm_create_destroy");
+        run_test(test_pm_create_destroy_twice, "test_pm_create_destroy_twice");
         run_test(test_pm_manage_int_optional, "test_pm_manage_int_optional");
         run_test(test_pm_manage_int_required, "test_pm_manage_int_required");
         run_test(test_pm_manage_real_optional, "test_pm_manage_real_optional");
