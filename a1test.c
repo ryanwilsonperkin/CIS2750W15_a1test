@@ -421,6 +421,128 @@ int test_pm_parse_all_required() {
         return 0;
 }
 
+int test_comment() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "#Comment\n"
+                "name = 1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 1);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_comment_only() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "#Comment";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_comment_inline() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = 1; #Comment";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 1);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_comment_multiple() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = 1; #Comment #Comment";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 1);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_comment_non_default() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "$Comment\n"
+                "name = 1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, '$'));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 1);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_comment_before_semicolon() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = 1 #Comment\n"
+                ";";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 1);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_comment_before_value() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = #Comment\n"
+                "1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 1);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_comment_before_equals() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name #Comment\n"
+                "= 1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 1);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 FILE *file_with_contents(char *contents) {
         FILE *fp = fopen(TEST_FILENAME, "w");
         fprintf(fp, contents);
@@ -482,6 +604,15 @@ int main(int argc, char **argv) {
         run_test(test_pm_parse_string_required, "test_pm_parse_string_required");
         run_test(test_pm_parse_list_required, "test_pm_parse_list_required");
         run_test(test_pm_parse_all_required, "test_pm_parse_all_required");
+
+        /* Comment tests */
+        run_test(test_comment, "test_comment");
+        run_test(test_comment_only, "test_comment_only");
+        run_test(test_comment_inline, "test_comment_inline");
+        run_test(test_comment_multiple, "test_comment_multiple");
+        run_test(test_comment_before_semicolon, "test_comment_before_semicolon");
+        run_test(test_comment_before_value, "test_comment_before_value");
+        run_test(test_comment_before_value, "test_comment_before_value");
 
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);

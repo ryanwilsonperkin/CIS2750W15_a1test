@@ -66,4 +66,14 @@ int test_pm_parse_string_required();
 int test_pm_parse_list_required();
 int test_pm_parse_all_required();
 
+/* Comment tests */
+int test_comment();
+int test_comment_only();
+int test_comment_inline();
+int test_comment_multiple();
+int test_comment_non_default();
+int test_comment_before_semicolon();
+int test_comment_before_value();
+int test_comment_before_equals();
+
 #endif  /* A1TEST_A1TEST_H */
