@@ -76,4 +76,12 @@ int test_comment_before_semicolon();
 int test_comment_before_value();
 int test_comment_before_equals();
 
+/* Parse error tests */
+int test_parse_error_no_semicolon();
+int test_parse_error_no_required_value();
+int test_parse_error_no_equals();
+int test_parse_error_double_equals();
+int test_parse_error_wrong_type();
+int test_parse_error_multiple_values();
+
 #endif  /* A1TEST_A1TEST_H */

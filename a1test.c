@@ -543,6 +543,84 @@ int test_comment_before_equals() {
         return 0;
 }
 
+int test_parse_error_no_semicolon() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = 1";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
+        ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_parse_error_no_required_value() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_parse_error_no_equals() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name 1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
+        ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_parse_error_double_equals() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name == 1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
+        ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_parse_error_wrong_type() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = 1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 0));
+        ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_parse_error_multiple_values() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = 1 2;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
+        ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 FILE *file_with_contents(char *contents) {
         FILE *fp = fopen(TEST_FILENAME, "w");
         fprintf(fp, contents);
@@ -613,6 +691,14 @@ int main(int argc, char **argv) {
         run_test(test_comment_before_semicolon, "test_comment_before_semicolon");
         run_test(test_comment_before_value, "test_comment_before_value");
         run_test(test_comment_before_value, "test_comment_before_value");
+
+        /* Parse error tests */
+        run_test(test_parse_error_no_semicolon, "test_parse_error_no_semicolon");
+        run_test(test_parse_error_no_required_value, "test_parse_error_no_required_value");
+        run_test(test_parse_error_no_equals, "test_parse_error_no_equals");
+        run_test(test_parse_error_double_equals, "test_parse_error_double_equals");
+        run_test(test_parse_error_wrong_type, "test_parse_error_wrong_type");
+        run_test(test_parse_error_multiple_values, "test_parse_error_multiple_values");
 
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
