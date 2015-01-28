@@ -135,6 +135,7 @@ int test_pm_parse_boolean_optional() {
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
         ASSERT(PM_getValue(pm, "name").bool_val == true);
+        fclose(fp);
         return 0;
 }
 
@@ -149,6 +150,7 @@ int test_pm_parse_string_optional() {
         ASSERT(PM_hasValue(pm, "name"));
         ASSERT(PM_getValue(pm, "name").str_val != NULL);
         ASSERT(strcmp(PM_getValue(pm, "name").str_val, "string") == 0);
+        fclose(fp);
         return 0;
 }
 
@@ -165,6 +167,7 @@ int test_pm_parse_list_optional() {
         ASSERT(PM_getValue(pm, "name").list_val != NULL);
         ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
         ASSERT(strcmp(str, "string") == 0);
+        fclose(fp);
         return 0;
 }
 
@@ -206,6 +209,7 @@ int test_pm_parse_boolean_required() {
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
         ASSERT(PM_getValue(pm, "name").bool_val == true);
+        fclose(fp);
         return 0;
 }
 
@@ -220,6 +224,7 @@ int test_pm_parse_string_required() {
         ASSERT(PM_hasValue(pm, "name"));
         ASSERT(PM_getValue(pm, "name").str_val != NULL);
         ASSERT(strcmp(PM_getValue(pm, "name").str_val, "string") == 0);
+        fclose(fp);
         return 0;
 }
 
@@ -236,6 +241,7 @@ int test_pm_parse_list_required() {
         ASSERT(PM_getValue(pm, "name").list_val != NULL);
         ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
         ASSERT(strcmp(str, "string") == 0);
+        fclose(fp);
         return 0;
 }
 
