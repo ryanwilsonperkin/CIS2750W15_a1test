@@ -93,18 +93,22 @@ int test_whitespace_multiline();
 /* INT_TYPE tests */
 int test_int_zero();
 int test_int_negative();
+int test_int_multiples();
 
 /* REAL_TYPE tests */
 int test_real_no_decimal();
+int test_real_multiples();
 
 /* BOOLEAN_TYPE tests */
 int test_boolean_false();
+int test_boolean_multiples();
 
 /* STRING_TYPE tests */
 int test_string_spaces();
 int test_string_line_break();
 int test_string_single_quotes();
 int test_string_number();
+int test_string_multiples();
 
 /* LIST_TYPE tests */
 int test_list_empty();
@@ -112,5 +116,6 @@ int test_list_many_values();
 int test_list_spaces();
 int test_list_no_spaces();
 int test_list_line_breaks();
+int test_list_multiples();
 
 #endif  /* A1TEST_A1TEST_H */

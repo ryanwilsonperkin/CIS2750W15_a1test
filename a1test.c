@@ -720,6 +720,25 @@ int test_int_negative() {
         return 0;
 }
 
+int test_int_multiples() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name1 = 1;\n"
+                "name2 = 2;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name1", INT_TYPE, 1));
+        ASSERT(PM_manage(pm, "name2", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name1"));
+        ASSERT(PM_hasValue(pm, "name2"));
+        ASSERT(PM_getValue(pm, "name1").int_val == 1);
+        ASSERT(PM_getValue(pm, "name2").int_val == 2);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 int test_real_no_decimal() {
         ParameterManager *pm;
         FILE *fp;
@@ -735,6 +754,25 @@ int test_real_no_decimal() {
         return 0;
 }
 
+int test_real_multiples() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name1 = 3.3;\n"
+                "name2 = 4.4;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name1", REAL_TYPE, 1));
+        ASSERT(PM_manage(pm, "name2", REAL_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name1"));
+        ASSERT(PM_hasValue(pm, "name2"));
+        ASSERT((PM_getValue(pm, "name1").real_val - 3.3) <= REAL_THRESHOLD);
+        ASSERT((PM_getValue(pm, "name2").real_val - 4.4) <= REAL_THRESHOLD);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 int test_boolean_false() {
         ParameterManager *pm;
         FILE *fp;
@@ -745,6 +783,25 @@ int test_boolean_false() {
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
         ASSERT(PM_getValue(pm, "name").bool_val == false);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_boolean_multiples() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name1 = true;\n"
+                "name2 = false;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name1", BOOLEAN_TYPE, 1));
+        ASSERT(PM_manage(pm, "name2", BOOLEAN_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name1"));
+        ASSERT(PM_hasValue(pm, "name2"));
+        ASSERT(PM_getValue(pm, "name1").bool_val == true);
+        ASSERT(PM_getValue(pm, "name2").bool_val == false);
         ASSERT(PM_destroy(pm));
         fclose(fp);
         return 0;
@@ -809,6 +866,27 @@ int test_string_number() {
         ASSERT(PM_hasValue(pm, "name"));
         ASSERT(PM_getValue(pm, "name").str_val != NULL);
         ASSERT(strcmp(PM_getValue(pm, "name").str_val, "123") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_string_multiples() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name1 = \"string1\";\n"
+                "name2 = \"string2\";";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name1", STRING_TYPE, 1));
+        ASSERT(PM_manage(pm, "name2", STRING_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name1"));
+        ASSERT(PM_hasValue(pm, "name2"));
+        ASSERT(PM_getValue(pm, "name1").str_val != NULL);
+        ASSERT(strcmp(PM_getValue(pm, "name1").str_val, "string1") == 0);
+        ASSERT(PM_getValue(pm, "name2").str_val != NULL);
+        ASSERT(strcmp(PM_getValue(pm, "name2").str_val, "string2") == 0);
         ASSERT(PM_destroy(pm));
         fclose(fp);
         return 0;
@@ -918,6 +996,30 @@ int test_list_line_breaks() {
         return 0;
 }
 
+int test_list_multiples() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name1 = { \"string1\" };\n"
+                "name2 = { \"string2\" };";
+        char *str;
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name1", LIST_TYPE, 1));
+        ASSERT(PM_manage(pm, "name2", LIST_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name1"));
+        ASSERT(PM_hasValue(pm, "name2"));
+        ASSERT(PM_getValue(pm, "name1").list_val != NULL);
+        ASSERT(str = PL_next(PM_getValue(pm, "name1").list_val));
+        ASSERT(strcmp(str, "string1") == 0);
+        ASSERT(PM_getValue(pm, "name2").list_val != NULL);
+        ASSERT(str = PL_next(PM_getValue(pm, "name2").list_val));
+        ASSERT(strcmp(str, "string2") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 FILE *file_with_contents(char *contents) {
         FILE *fp = fopen(TEST_FILENAME, "w");
         fprintf(fp, contents);
@@ -1006,18 +1108,22 @@ int main(int argc, char **argv) {
         /* INT_TYPE tests */
         run_test(test_int_zero, "test_int_zero");
         run_test(test_int_negative, "test_int_negative");
+        run_test(test_int_multiples, "test_int_multiples");
 
         /* REAL_TYPE tests */
         run_test(test_real_no_decimal, "test_real_no_decimal");
+        run_test(test_real_multiples, "test_real_multiples");
 
         /* BOOLEAN_TYPE tests */
         run_test(test_boolean_false, "test_boolean_false");
+        run_test(test_boolean_multiples, "test_boolean_multiples");
 
         /* STRING_TYPE tests */
         run_test(test_string_spaces, "test_string_spaces");
         run_test(test_string_line_break, "test_string_line_break");
         run_test(test_string_single_quotes, "test_string_single_quotes");
         run_test(test_string_number, "test_string_number");
+        run_test(test_string_multiples, "test_string_multiples");
 
         /* LIST_TYPE tests */
         run_test(test_list_empty, "test_list_empty");
@@ -1025,6 +1131,7 @@ int main(int argc, char **argv) {
         run_test(test_list_spaces, "test_list_spaces");
         run_test(test_list_no_spaces, "test_list_no_spaces");
         run_test(test_list_line_breaks, "test_list_line_breaks");
+        run_test(test_list_multiples, "test_list_multiples");
 
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
