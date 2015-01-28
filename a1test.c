@@ -814,6 +814,110 @@ int test_string_number() {
         return 0;
 }
 
+int test_list_empty() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = {};";
+        char *str;
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        str = PL_next(PM_getValue(pm, "name").list_val);
+        ASSERT(str == NULL);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_list_many_values() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = { \"string1\", \"string2\", \"string3\" };";
+        char *str;
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").list_val != NULL);
+        ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
+        ASSERT(strcmp(str, "string1") == 0);
+        ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
+        ASSERT(strcmp(str, "string2") == 0);
+        ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
+        ASSERT(strcmp(str, "string3") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_list_spaces() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = {   \"string1\"   ,   \"string2\"   };";
+        char *str;
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").list_val != NULL);
+        ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
+        ASSERT(strcmp(str, "string1") == 0);
+        ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
+        ASSERT(strcmp(str, "string2") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_list_no_spaces() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = {\"string1\",\"string2\"};";
+        char *str;
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").list_val != NULL);
+        ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
+        ASSERT(strcmp(str, "string1") == 0);
+        ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
+        ASSERT(strcmp(str, "string2") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_list_line_breaks() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = {\"string1\",\n"
+                "\"string2\",\n"
+                "\"string3\"\n"
+                "};";
+        char *str;
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").list_val != NULL);
+        ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
+        ASSERT(strcmp(str, "string1") == 0);
+        ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
+        ASSERT(strcmp(str, "string2") == 0);
+        ASSERT(str = PL_next(PM_getValue(pm, "name").list_val));
+        ASSERT(strcmp(str, "string3") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 FILE *file_with_contents(char *contents) {
         FILE *fp = fopen(TEST_FILENAME, "w");
         fprintf(fp, contents);
@@ -914,6 +1018,13 @@ int main(int argc, char **argv) {
         run_test(test_string_line_break, "test_string_line_break");
         run_test(test_string_single_quotes, "test_string_single_quotes");
         run_test(test_string_number, "test_string_number");
+
+        /* LIST_TYPE tests */
+        run_test(test_list_empty, "test_list_empty");
+        run_test(test_list_many_values, "test_list_many_values");
+        run_test(test_list_spaces, "test_list_spaces");
+        run_test(test_list_no_spaces, "test_list_no_spaces");
+        run_test(test_list_line_breaks, "test_list_line_breaks");
 
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);

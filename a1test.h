@@ -106,4 +106,11 @@ int test_string_line_break();
 int test_string_single_quotes();
 int test_string_number();
 
+/* LIST_TYPE tests */
+int test_list_empty();
+int test_list_many_values();
+int test_list_spaces();
+int test_list_no_spaces();
+int test_list_line_breaks();
+
 #endif  /* A1TEST_A1TEST_H */
