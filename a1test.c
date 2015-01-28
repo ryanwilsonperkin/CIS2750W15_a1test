@@ -1166,5 +1166,6 @@ int main(int argc, char **argv) {
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
         printf("[a1test] Number of failures: %d\n", num_fail);
+        unlink(TEST_FILENAME);
         return 0;
 }
