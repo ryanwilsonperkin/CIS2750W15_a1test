@@ -281,28 +281,38 @@ void run_test(int (*fn)(), char *fn_name) {
 }
 
 int main(int argc, char **argv) {
+        /* Main functionality tests */
         run_test(test_pm_create_destroy, "test_pm_create_destroy");
         run_test(test_pm_create_destroy_twice, "test_pm_create_destroy_twice");
+
+        /* PM_manage optional value tests */
         run_test(test_pm_manage_int_optional, "test_pm_manage_int_optional");
-        run_test(test_pm_manage_int_required, "test_pm_manage_int_required");
         run_test(test_pm_manage_real_optional, "test_pm_manage_real_optional");
-        run_test(test_pm_manage_real_required, "test_pm_manage_real_required");
         run_test(test_pm_manage_boolean_optional, "test_pm_manage_boolean_optional");
-        run_test(test_pm_manage_boolean_required, "test_pm_manage_boolean_required");
         run_test(test_pm_manage_string_optional, "test_pm_manage_string_optional");
-        run_test(test_pm_manage_string_required, "test_pm_manage_string_required");
         run_test(test_pm_manage_list_optional, "test_pm_manage_list_optional");
+
+        /* PM_manage required value tests */
+        run_test(test_pm_manage_int_required, "test_pm_manage_int_required");
+        run_test(test_pm_manage_real_required, "test_pm_manage_real_required");
+        run_test(test_pm_manage_boolean_required, "test_pm_manage_boolean_required");
+        run_test(test_pm_manage_string_required, "test_pm_manage_string_required");
         run_test(test_pm_manage_list_required, "test_pm_manage_list_required");
+
+        /* PM_parseFrom optional value tests */
         run_test(test_pm_parse_int_optional, "test_pm_parse_int_optional");
-        run_test(test_pm_parse_int_required, "test_pm_parse_int_required");
         run_test(test_pm_parse_real_optional, "test_pm_parse_real_optional");
-        run_test(test_pm_parse_real_required, "test_pm_parse_real_required");
         run_test(test_pm_parse_boolean_optional, "test_pm_parse_boolean_optional");
-        run_test(test_pm_parse_boolean_required, "test_pm_parse_boolean_required");
         run_test(test_pm_parse_string_optional, "test_pm_parse_string_optional");
-        run_test(test_pm_parse_string_required, "test_pm_parse_string_required");
         run_test(test_pm_parse_list_optional, "test_pm_parse_list_optional");
+
+        /* PM_parseFrom required value tests */
+        run_test(test_pm_parse_int_required, "test_pm_parse_int_required");
+        run_test(test_pm_parse_real_required, "test_pm_parse_real_required");
+        run_test(test_pm_parse_boolean_required, "test_pm_parse_boolean_required");
+        run_test(test_pm_parse_string_required, "test_pm_parse_string_required");
         run_test(test_pm_parse_list_required, "test_pm_parse_list_required");
+
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
         printf("[a1test] Number of failures: %d\n", num_fail);
