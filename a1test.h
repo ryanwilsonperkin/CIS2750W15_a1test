@@ -48,6 +48,7 @@ int test_pm_parse_real_optional();
 int test_pm_parse_boolean_optional();
 int test_pm_parse_string_optional();
 int test_pm_parse_list_optional();
+int test_pm_parse_all_optional();
 
 /* PM_parseFrom missing optional value tests */
 int test_pm_parse_int_optional_missing();
@@ -55,6 +56,7 @@ int test_pm_parse_real_optional_missing();
 int test_pm_parse_boolean_optional_missing();
 int test_pm_parse_string_optional_missing();
 int test_pm_parse_list_optional_missing();
+int test_pm_parse_all_optional_missing();
 
 /* PM_parseFrom required value tests */
 int test_pm_parse_int_required();
@@ -62,5 +64,6 @@ int test_pm_parse_real_required();
 int test_pm_parse_boolean_required();
 int test_pm_parse_string_required();
 int test_pm_parse_list_required();
+int test_pm_parse_all_required();
 
 #endif  /* A1TEST_A1TEST_H */

@@ -182,6 +182,40 @@ int test_pm_parse_list_optional() {
         return 0;
 }
 
+int test_pm_parse_all_optional() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name1 = 1;\n"
+                "name2 = 3.3;\n"
+                "name3 = true;\n"
+                "name4 = \"string\";\n"
+                "name5 = { \"string\" };";
+        char *str;
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name1", INT_TYPE, 0));
+        ASSERT(PM_manage(pm, "name2", REAL_TYPE, 0));
+        ASSERT(PM_manage(pm, "name3", BOOLEAN_TYPE, 0));
+        ASSERT(PM_manage(pm, "name4", STRING_TYPE, 0));
+        ASSERT(PM_manage(pm, "name5", LIST_TYPE, 0));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name1"));
+        ASSERT(PM_hasValue(pm, "name2"));
+        ASSERT(PM_hasValue(pm, "name3"));
+        ASSERT(PM_hasValue(pm, "name4"));
+        ASSERT(PM_hasValue(pm, "name5"));
+        ASSERT(PM_getValue(pm, "name1").int_val == 1);
+        ASSERT((PM_getValue(pm, "name2").real_val - 3.3) <= REAL_THRESHOLD);
+        ASSERT(PM_getValue(pm, "name3").bool_val == true);
+        ASSERT(PM_getValue(pm, "name4").str_val != NULL);
+        ASSERT(strcmp(PM_getValue(pm, "name4").str_val, "string") == 0);
+        ASSERT(str = PL_next(PM_getValue(pm, "name5").list_val));
+        ASSERT(strcmp(str, "string") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 int test_pm_parse_int_optional_missing() {
         ParameterManager *pm;
         FILE *fp;
@@ -247,6 +281,28 @@ int test_pm_parse_list_optional_missing() {
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(!PM_hasValue(pm, "name"));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_pm_parse_all_optional_missing() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name1", INT_TYPE, 0));
+        ASSERT(PM_manage(pm, "name2", REAL_TYPE, 0));
+        ASSERT(PM_manage(pm, "name3", BOOLEAN_TYPE, 0));
+        ASSERT(PM_manage(pm, "name4", STRING_TYPE, 0));
+        ASSERT(PM_manage(pm, "name5", LIST_TYPE, 0));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(!PM_hasValue(pm, "name1"));
+        ASSERT(!PM_hasValue(pm, "name2"));
+        ASSERT(!PM_hasValue(pm, "name3"));
+        ASSERT(!PM_hasValue(pm, "name4"));
+        ASSERT(!PM_hasValue(pm, "name5"));
         ASSERT(PM_destroy(pm));
         fclose(fp);
         return 0;
@@ -331,6 +387,40 @@ int test_pm_parse_list_required() {
         return 0;
 }
 
+int test_pm_parse_all_required() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name1 = 1;\n"
+                "name2 = 3.3;\n"
+                "name3 = true;\n"
+                "name4 = \"string\";\n"
+                "name5 = { \"string\" };";
+        char *str;
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name1", INT_TYPE, 1));
+        ASSERT(PM_manage(pm, "name2", REAL_TYPE, 1));
+        ASSERT(PM_manage(pm, "name3", BOOLEAN_TYPE, 1));
+        ASSERT(PM_manage(pm, "name4", STRING_TYPE, 1));
+        ASSERT(PM_manage(pm, "name5", LIST_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name1"));
+        ASSERT(PM_hasValue(pm, "name2"));
+        ASSERT(PM_hasValue(pm, "name3"));
+        ASSERT(PM_hasValue(pm, "name4"));
+        ASSERT(PM_hasValue(pm, "name5"));
+        ASSERT(PM_getValue(pm, "name1").int_val == 1);
+        ASSERT((PM_getValue(pm, "name2").real_val - 3.3) <= REAL_THRESHOLD);
+        ASSERT(PM_getValue(pm, "name3").bool_val == true);
+        ASSERT(PM_getValue(pm, "name4").str_val != NULL);
+        ASSERT(strcmp(PM_getValue(pm, "name4").str_val, "string") == 0);
+        ASSERT(str = PL_next(PM_getValue(pm, "name5").list_val));
+        ASSERT(strcmp(str, "string") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 FILE *file_with_contents(char *contents) {
         FILE *fp = fopen(TEST_FILENAME, "w");
         fprintf(fp, contents);
@@ -375,6 +465,7 @@ int main(int argc, char **argv) {
         run_test(test_pm_parse_boolean_optional, "test_pm_parse_boolean_optional");
         run_test(test_pm_parse_string_optional, "test_pm_parse_string_optional");
         run_test(test_pm_parse_list_optional, "test_pm_parse_list_optional");
+        run_test(test_pm_parse_all_optional, "test_pm_parse_all_optional");
 
         /* PM_parseFrom missing optional value tests */
         run_test(test_pm_parse_int_optional_missing, "test_pm_parse_int_optional_missing");
@@ -382,6 +473,7 @@ int main(int argc, char **argv) {
         run_test(test_pm_parse_boolean_optional_missing, "test_pm_parse_boolean_optional_missing");
         run_test(test_pm_parse_string_optional_missing, "test_pm_parse_string_optional_missing");
         run_test(test_pm_parse_list_optional_missing, "test_pm_parse_list_optional_missing");
+        run_test(test_pm_parse_all_optional_missing, "test_pm_parse_all_optional_missing");
 
         /* PM_parseFrom required value tests */
         run_test(test_pm_parse_int_required, "test_pm_parse_int_required");
@@ -389,6 +481,7 @@ int main(int argc, char **argv) {
         run_test(test_pm_parse_boolean_required, "test_pm_parse_boolean_required");
         run_test(test_pm_parse_string_required, "test_pm_parse_string_required");
         run_test(test_pm_parse_list_required, "test_pm_parse_list_required");
+        run_test(test_pm_parse_all_required, "test_pm_parse_all_required");
 
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
