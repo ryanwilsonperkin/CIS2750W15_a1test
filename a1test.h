@@ -1,13 +1,26 @@
 #ifndef A1TEST_A1TEST_H
 #define A1TEST_A1TEST_H
 
+/* File name to use for writing temporary files */
 #define TEST_FILENAME "TEMP"
+
+/* Default value to use for PM_create */
 #define DEFAULT_CREATE_VAL 10
+
+/* Default character to use as a comment */
 #define DEFAULT_COMMENT '#'
+
+/* Maximum difference threshold when comparing REAL_TYPE values */
 #define REAL_THRESHOLD 1.0
 
+/*
+ * ASSERT
+ * A simple macro. Return 1 if cond evaluates to false.
+ * Used by test cases to exit if condition is false.
+ */
 #define ASSERT(cond) if (!(cond)) return 1
 
+/* Test framework methods */
 FILE *file_with_contents(char *contents);
 void run_test(int (*fn)(), char *fn_name);
 
