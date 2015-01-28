@@ -84,4 +84,10 @@ int test_parse_error_double_equals();
 int test_parse_error_wrong_type();
 int test_parse_error_multiple_values();
 
+/* Whitespace tests */
+int test_whitespace_more();
+int test_whitespace_less();
+int test_whitespace_none();
+int test_whitespace_multiline();
+
 #endif  /* A1TEST_A1TEST_H */

@@ -621,6 +621,75 @@ int test_parse_error_multiple_values() {
         return 0;
 }
 
+int test_whitespace_more() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "   name   =   1   ;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 1);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_whitespace_less() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name1=1;\n"
+                "name2=2;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name1", INT_TYPE, 1));
+        ASSERT(PM_manage(pm, "name2", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name1"));
+        ASSERT(PM_hasValue(pm, "name2"));
+        ASSERT(PM_getValue(pm, "name1").int_val == 1);
+        ASSERT(PM_getValue(pm, "name2").int_val == 2);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_whitespace_none() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name1=1;name2=2;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name1", INT_TYPE, 1));
+        ASSERT(PM_manage(pm, "name2", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name1"));
+        ASSERT(PM_hasValue(pm, "name2"));
+        ASSERT(PM_getValue(pm, "name1").int_val == 1);
+        ASSERT(PM_getValue(pm, "name2").int_val == 2);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_whitespace_multiline() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name =\n"
+                "\n     "
+                "1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 1);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 FILE *file_with_contents(char *contents) {
         FILE *fp = fopen(TEST_FILENAME, "w");
         fprintf(fp, contents);
@@ -699,6 +768,12 @@ int main(int argc, char **argv) {
         run_test(test_parse_error_double_equals, "test_parse_error_double_equals");
         run_test(test_parse_error_wrong_type, "test_parse_error_wrong_type");
         run_test(test_parse_error_multiple_values, "test_parse_error_multiple_values");
+
+        /* Whitespace tests */
+        run_test(test_whitespace_more, "test_whitespace_more");
+        run_test(test_whitespace_less, "test_whitespace_less");
+        run_test(test_whitespace_none, "test_whitespace_none");
+        run_test(test_whitespace_multiline, "test_whitespace_multiline");
 
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
