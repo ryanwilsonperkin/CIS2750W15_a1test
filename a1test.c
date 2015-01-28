@@ -8,6 +8,7 @@
 
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_GREEN "\x1b[32m"
+#define ANSI_COLOR_YELLOW "\x1b[33m"
 #define ANSI_COLOR_RESET "\x1b[0m"
 
 int num_tests = 0;
@@ -1076,11 +1077,13 @@ void run_test(int (*fn)(), char *fn_name) {
 
 int main(int argc, char **argv) {
         /* Main functionality tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: Main functionality tests" ANSI_COLOR_RESET "\n");
         run_test(test_pm_create_destroy, "test_pm_create_destroy");
         run_test(test_pm_create_destroy_twice, "test_pm_create_destroy_twice");
         run_test(test_pm_create_destroy_large_size, "test_pm_create_destroy_large_size");
 
         /* PM_manage optional value tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: PM_manage optional value tests" ANSI_COLOR_RESET "\n");
         run_test(test_pm_manage_int_optional, "test_pm_manage_int_optional");
         run_test(test_pm_manage_real_optional, "test_pm_manage_real_optional");
         run_test(test_pm_manage_boolean_optional, "test_pm_manage_boolean_optional");
@@ -1088,6 +1091,7 @@ int main(int argc, char **argv) {
         run_test(test_pm_manage_list_optional, "test_pm_manage_list_optional");
 
         /* PM_manage required value tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: PM_manage required value tests" ANSI_COLOR_RESET "\n");
         run_test(test_pm_manage_int_required, "test_pm_manage_int_required");
         run_test(test_pm_manage_real_required, "test_pm_manage_real_required");
         run_test(test_pm_manage_boolean_required, "test_pm_manage_boolean_required");
@@ -1095,6 +1099,7 @@ int main(int argc, char **argv) {
         run_test(test_pm_manage_list_required, "test_pm_manage_list_required");
 
         /* PM_parseFrom optional value tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: PM_parseFrom optional value tests" ANSI_COLOR_RESET "\n");
         run_test(test_pm_parse_int_optional, "test_pm_parse_int_optional");
         run_test(test_pm_parse_real_optional, "test_pm_parse_real_optional");
         run_test(test_pm_parse_boolean_optional, "test_pm_parse_boolean_optional");
@@ -1103,6 +1108,7 @@ int main(int argc, char **argv) {
         run_test(test_pm_parse_all_optional, "test_pm_parse_all_optional");
 
         /* PM_parseFrom missing optional value tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: PM_parseFrom missing optional value tests" ANSI_COLOR_RESET "\n");
         run_test(test_pm_parse_int_optional_missing, "test_pm_parse_int_optional_missing");
         run_test(test_pm_parse_real_optional_missing, "test_pm_parse_real_optional_missing");
         run_test(test_pm_parse_boolean_optional_missing, "test_pm_parse_boolean_optional_missing");
@@ -1111,6 +1117,7 @@ int main(int argc, char **argv) {
         run_test(test_pm_parse_all_optional_missing, "test_pm_parse_all_optional_missing");
 
         /* PM_parseFrom required value tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: PM_parseFrom required value tests" ANSI_COLOR_RESET "\n");
         run_test(test_pm_parse_int_required, "test_pm_parse_int_required");
         run_test(test_pm_parse_real_required, "test_pm_parse_real_required");
         run_test(test_pm_parse_boolean_required, "test_pm_parse_boolean_required");
@@ -1119,6 +1126,7 @@ int main(int argc, char **argv) {
         run_test(test_pm_parse_all_required, "test_pm_parse_all_required");
 
         /* Comment tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: Comment tests" ANSI_COLOR_RESET "\n");
         run_test(test_comment, "test_comment");
         run_test(test_comment_only, "test_comment_only");
         run_test(test_comment_inline, "test_comment_inline");
@@ -1128,6 +1136,7 @@ int main(int argc, char **argv) {
         run_test(test_comment_before_value, "test_comment_before_value");
 
         /* Parse error tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: Parse error tests" ANSI_COLOR_RESET "\n");
         run_test(test_parse_error_no_semicolon, "test_parse_error_no_semicolon");
         run_test(test_parse_error_no_required_value, "test_parse_error_no_required_value");
         run_test(test_parse_error_no_equals, "test_parse_error_no_equals");
@@ -1136,25 +1145,30 @@ int main(int argc, char **argv) {
         run_test(test_parse_error_multiple_values, "test_parse_error_multiple_values");
 
         /* Whitespace tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: Whitespace tests" ANSI_COLOR_RESET "\n");
         run_test(test_whitespace_more, "test_whitespace_more");
         run_test(test_whitespace_less, "test_whitespace_less");
         run_test(test_whitespace_none, "test_whitespace_none");
         run_test(test_whitespace_multiline, "test_whitespace_multiline");
         
         /* INT_TYPE tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: INT_TYPE tests" ANSI_COLOR_RESET "\n");
         run_test(test_int_zero, "test_int_zero");
         run_test(test_int_negative, "test_int_negative");
         run_test(test_int_multiples, "test_int_multiples");
 
         /* REAL_TYPE tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: REAL_TYPE tests" ANSI_COLOR_RESET "\n");
         run_test(test_real_no_decimal, "test_real_no_decimal");
         run_test(test_real_multiples, "test_real_multiples");
 
         /* BOOLEAN_TYPE tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: BOOLEAN_TYPE tests" ANSI_COLOR_RESET "\n");
         run_test(test_boolean_false, "test_boolean_false");
         run_test(test_boolean_multiples, "test_boolean_multiples");
 
         /* STRING_TYPE tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: STRING_TYPE tests" ANSI_COLOR_RESET "\n");
         run_test(test_string_spaces, "test_string_spaces");
         run_test(test_string_line_break, "test_string_line_break");
         run_test(test_string_single_quotes, "test_string_single_quotes");
@@ -1162,6 +1176,7 @@ int main(int argc, char **argv) {
         run_test(test_string_multiples, "test_string_multiples");
 
         /* LIST_TYPE tests */
+        printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: LIST_TYPE tests" ANSI_COLOR_RESET "\n");
         run_test(test_list_empty, "test_list_empty");
         run_test(test_list_many_values, "test_list_many_values");
         run_test(test_list_spaces, "test_list_spaces");
@@ -1169,9 +1184,9 @@ int main(int argc, char **argv) {
         run_test(test_list_line_breaks, "test_list_line_breaks");
         run_test(test_list_multiples, "test_list_multiples");
 
-        printf("[a1test] Number of tests run: %d\n", num_tests);
-        printf("[a1test] Number of successes: %d\n", num_success);
-        printf("[a1test] Number of failures: %d\n", num_fail);
+        printf(ANSI_COLOR_YELLOW "[a1test] Number of tests run: %d" ANSI_COLOR_RESET "\n", num_tests);
+        printf(ANSI_COLOR_YELLOW "[a1test] Number of successes: %d" ANSI_COLOR_RESET "\n", num_success);
+        printf(ANSI_COLOR_YELLOW "[a1test] Number of failures: %d" ANSI_COLOR_RESET "\n", num_fail);
         unlink(TEST_FILENAME);
         return 0;
 }
