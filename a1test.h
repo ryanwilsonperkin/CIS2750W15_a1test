@@ -3,6 +3,8 @@
 
 #define TEST_FILENAME "TEMP"
 #define DEFAULT_CREATE_VAL 10
+#define DEFAULT_COMMENT '#'
+#define REAL_THRESHOLD 1.0
 
 #define ASSERT(cond) if (!(cond)) return 1
 
@@ -22,5 +24,15 @@ int test_pm_manage_string_optional();
 int test_pm_manage_string_required();
 int test_pm_manage_list_optional();
 int test_pm_manage_list_required();
+int test_pm_parse_int_optional();
+int test_pm_parse_int_required();
+int test_pm_parse_real_optional();
+int test_pm_parse_real_required();
+int test_pm_parse_boolean_optional();
+int test_pm_parse_boolean_required();
+int test_pm_parse_string_optional();
+int test_pm_parse_string_required();
+int test_pm_parse_list_optional();
+int test_pm_parse_list_required();
 
 #endif  /* A1TEST_A1TEST_H */
