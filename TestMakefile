@@ -1,4 +1,5 @@
 CC=gcc
+CFLAGS=-g
 INCLUDES=$(addprefix -I,$(shell find . -not -iwholename "*.git*" -type d -print))
 LDPATHS=$(addprefix -L,$(shell find . -not -iwholename "*.git*" -type d -print))
 LDLIBS=-lpm
