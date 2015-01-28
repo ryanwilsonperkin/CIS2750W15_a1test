@@ -6,6 +6,10 @@
 #include "ParameterManager.h"
 #include "a1test.h"
 
+#define ANSI_COLOR_RED "\x1b[31m"
+#define ANSI_COLOR_GREEN "\x1b[32m"
+#define ANSI_COLOR_RESET "\x1b[0m"
+
 int num_tests = 0;
 int num_fail = 0;
 int num_success = 0;
@@ -1059,13 +1063,14 @@ int fork_test(int (*fn)()) {
 
 void run_test(int (*fn)(), char *fn_name) {
         num_tests++;
-        printf("\n[a1test][TEST]: %s\n", fn_name);
+        printf("[a1test][TEST]: %s ", fn_name);
+        fflush(stdout);
         if (fork_test(fn)) {
                 num_fail++;
-                printf("\n[a1test][FAILURE]: %s\n", fn_name);
+                printf(ANSI_COLOR_RED "[FAILURE]\n" ANSI_COLOR_RESET);
         } else {
                 num_success++;
-                printf("\n[a1test][SUCCESS]: %s\n", fn_name);
+                printf(ANSI_COLOR_GREEN "[SUCCESS]\n" ANSI_COLOR_RESET);
         }
 }
 
@@ -1164,7 +1169,7 @@ int main(int argc, char **argv) {
         run_test(test_list_line_breaks, "test_list_line_breaks");
         run_test(test_list_multiples, "test_list_multiples");
 
-        printf("\n[a1test] Number of tests run: %d\n", num_tests);
+        printf("[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
         printf("[a1test] Number of failures: %d\n", num_fail);
         unlink(TEST_FILENAME);
