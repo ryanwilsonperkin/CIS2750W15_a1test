@@ -121,13 +121,13 @@ int test_pm_parse_int_optional() {
 int test_pm_parse_real_optional() {
         ParameterManager *pm;
         FILE *fp;
-        char *contents = "name = 1.1;";
+        char *contents = "name = 3.3;";
         fp = file_with_contents(contents);
         ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
         ASSERT(PM_manage(pm, "name", REAL_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
-        ASSERT((PM_getValue(pm, "name").real_val - 1.1) <= REAL_THRESHOLD);
+        ASSERT((PM_getValue(pm, "name").real_val - 3.3) <= REAL_THRESHOLD);
         ASSERT(PM_destroy(pm));
         fclose(fp);
         return 0;
@@ -270,13 +270,13 @@ int test_pm_parse_int_required() {
 int test_pm_parse_real_required() {
         ParameterManager *pm;
         FILE *fp;
-        char *contents = "name = 1.1;";
+        char *contents = "name = 3.3;";
         fp = file_with_contents(contents);
         ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
         ASSERT(PM_manage(pm, "name", REAL_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
-        ASSERT((PM_getValue(pm, "name").real_val - 1.1) <= REAL_THRESHOLD);
+        ASSERT((PM_getValue(pm, "name").real_val - 3.3) <= REAL_THRESHOLD);
         ASSERT(PM_destroy(pm));
         fclose(fp);
         return 0;
