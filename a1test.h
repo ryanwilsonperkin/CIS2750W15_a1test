@@ -5,7 +5,7 @@
 #define TEST_FILENAME "TEMP"
 
 /* Default value to use for PM_create */
-#define DEFAULT_CREATE_VAL 10
+#define DEFAULT_CREATE_VAL 1
 
 /* Default character to use as a comment */
 #define DEFAULT_COMMENT '#'

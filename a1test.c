@@ -25,7 +25,7 @@ int test_pm_create_destroy_twice() {
 
 int test_pm_manage_int_optional() {
         ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
         ASSERT(PM_destroy(pm));
         return 0;
@@ -33,7 +33,7 @@ int test_pm_manage_int_optional() {
 
 int test_pm_manage_real_optional() {
         ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", REAL_TYPE, 0));
         ASSERT(PM_destroy(pm));
         return 0;
@@ -41,7 +41,7 @@ int test_pm_manage_real_optional() {
 
 int test_pm_manage_boolean_optional() {
         ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 0));
         ASSERT(PM_destroy(pm));
         return 0;
@@ -49,7 +49,7 @@ int test_pm_manage_boolean_optional() {
 
 int test_pm_manage_string_optional() {
         ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", STRING_TYPE, 0));
         ASSERT(PM_destroy(pm));
         return 0;
@@ -57,7 +57,7 @@ int test_pm_manage_string_optional() {
 
 int test_pm_manage_list_optional() {
         ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 0));
         ASSERT(PM_destroy(pm));
         return 0;
@@ -65,7 +65,7 @@ int test_pm_manage_list_optional() {
 
 int test_pm_manage_int_required() {
         ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_destroy(pm));
         return 0;
@@ -73,7 +73,7 @@ int test_pm_manage_int_required() {
 
 int test_pm_manage_real_required() {
         ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", REAL_TYPE, 1));
         ASSERT(PM_destroy(pm));
         return 0;
@@ -81,7 +81,7 @@ int test_pm_manage_real_required() {
 
 int test_pm_manage_boolean_required() {
         ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 1));
         ASSERT(PM_destroy(pm));
         return 0;
@@ -89,7 +89,7 @@ int test_pm_manage_boolean_required() {
 
 int test_pm_manage_string_required() {
         ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
         ASSERT(PM_destroy(pm));
         return 0;
@@ -97,7 +97,7 @@ int test_pm_manage_string_required() {
 
 int test_pm_manage_list_required() {
         ParameterManager *pm;
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
         ASSERT(PM_destroy(pm));
         return 0;
@@ -108,7 +108,7 @@ int test_pm_parse_int_optional() {
         FILE *fp;
         char *contents = "name = 1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -123,7 +123,7 @@ int test_pm_parse_real_optional() {
         FILE *fp;
         char *contents = "name = 3.3;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", REAL_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -138,7 +138,7 @@ int test_pm_parse_boolean_optional() {
         FILE *fp;
         char *contents = "name = true;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -153,7 +153,7 @@ int test_pm_parse_string_optional() {
         FILE *fp;
         char *contents = "name = \"string\";";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", STRING_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -170,7 +170,7 @@ int test_pm_parse_list_optional() {
         char *contents = "name = { \"string\" };";
         char *str;
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -192,7 +192,7 @@ int test_pm_parse_all_optional() {
                 "name5 = { \"string\" };";
         char *str;
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(5));
         ASSERT(PM_manage(pm, "name1", INT_TYPE, 0));
         ASSERT(PM_manage(pm, "name2", REAL_TYPE, 0));
         ASSERT(PM_manage(pm, "name3", BOOLEAN_TYPE, 0));
@@ -221,7 +221,7 @@ int test_pm_parse_int_optional_missing() {
         FILE *fp;
         char *contents = "";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
         ASSERT(!PM_hasValue(pm, "name"));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
@@ -235,7 +235,7 @@ int test_pm_parse_real_optional_missing() {
         FILE *fp;
         char *contents = "";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", REAL_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(!PM_hasValue(pm, "name"));
@@ -249,7 +249,7 @@ int test_pm_parse_boolean_optional_missing() {
         FILE *fp;
         char *contents = "";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(!PM_hasValue(pm, "name"));
@@ -263,7 +263,7 @@ int test_pm_parse_string_optional_missing() {
         FILE *fp;
         char *contents = "";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", STRING_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(!PM_hasValue(pm, "name"));
@@ -277,7 +277,7 @@ int test_pm_parse_list_optional_missing() {
         FILE *fp;
         char *contents = "";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 0));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(!PM_hasValue(pm, "name"));
@@ -291,7 +291,7 @@ int test_pm_parse_all_optional_missing() {
         FILE *fp;
         char *contents = "";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(5));
         ASSERT(PM_manage(pm, "name1", INT_TYPE, 0));
         ASSERT(PM_manage(pm, "name2", REAL_TYPE, 0));
         ASSERT(PM_manage(pm, "name3", BOOLEAN_TYPE, 0));
@@ -313,7 +313,7 @@ int test_pm_parse_int_required() {
         FILE *fp;
         char *contents = "name = 1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -328,7 +328,7 @@ int test_pm_parse_real_required() {
         FILE *fp;
         char *contents = "name = 3.3;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", REAL_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -343,7 +343,7 @@ int test_pm_parse_boolean_required() {
         FILE *fp;
         char *contents = "name = true;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -358,7 +358,7 @@ int test_pm_parse_string_required() {
         FILE *fp;
         char *contents = "name = \"string\";";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -375,7 +375,7 @@ int test_pm_parse_list_required() {
         char *contents = "name = { \"string\" };";
         char *str;
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -397,7 +397,7 @@ int test_pm_parse_all_required() {
                 "name5 = { \"string\" };";
         char *str;
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(5));
         ASSERT(PM_manage(pm, "name1", INT_TYPE, 1));
         ASSERT(PM_manage(pm, "name2", REAL_TYPE, 1));
         ASSERT(PM_manage(pm, "name3", BOOLEAN_TYPE, 1));
@@ -427,7 +427,7 @@ int test_comment() {
         char *contents = "#Comment\n"
                 "name = 1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -454,7 +454,7 @@ int test_comment_inline() {
         FILE *fp;
         char *contents = "name = 1; #Comment";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -469,7 +469,7 @@ int test_comment_multiple() {
         FILE *fp;
         char *contents = "name = 1; #Comment #Comment";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -485,7 +485,7 @@ int test_comment_non_default() {
         char *contents = "$Comment\n"
                 "name = 1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, '$'));
         ASSERT(PM_hasValue(pm, "name"));
@@ -501,7 +501,7 @@ int test_comment_before_semicolon() {
         char *contents = "name = 1 #Comment\n"
                 ";";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -517,7 +517,7 @@ int test_comment_before_value() {
         char *contents = "name = #Comment\n"
                 "1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -533,7 +533,7 @@ int test_comment_before_equals() {
         char *contents = "name #Comment\n"
                 "= 1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -548,7 +548,7 @@ int test_parse_error_no_semicolon() {
         FILE *fp;
         char *contents = "name = 1";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
         ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_destroy(pm));
@@ -561,7 +561,7 @@ int test_parse_error_no_required_value() {
         FILE *fp;
         char *contents = "";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_destroy(pm));
@@ -574,7 +574,7 @@ int test_parse_error_no_equals() {
         FILE *fp;
         char *contents = "name 1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
         ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_destroy(pm));
@@ -587,7 +587,7 @@ int test_parse_error_double_equals() {
         FILE *fp;
         char *contents = "name == 1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
         ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_destroy(pm));
@@ -600,7 +600,7 @@ int test_parse_error_wrong_type() {
         FILE *fp;
         char *contents = "name = 1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 0));
         ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_destroy(pm));
@@ -613,7 +613,7 @@ int test_parse_error_multiple_values() {
         FILE *fp;
         char *contents = "name = 1 2;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
         ASSERT(!PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_destroy(pm));
@@ -626,7 +626,7 @@ int test_whitespace_more() {
         FILE *fp;
         char *contents = "   name   =   1   ;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -642,7 +642,7 @@ int test_whitespace_less() {
         char *contents = "name1=1;\n"
                 "name2=2;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(2));
         ASSERT(PM_manage(pm, "name1", INT_TYPE, 1));
         ASSERT(PM_manage(pm, "name2", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
@@ -660,7 +660,7 @@ int test_whitespace_none() {
         FILE *fp;
         char *contents = "name1=1;name2=2;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(2));
         ASSERT(PM_manage(pm, "name1", INT_TYPE, 1));
         ASSERT(PM_manage(pm, "name2", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
@@ -680,7 +680,7 @@ int test_whitespace_multiline() {
                 "\n     "
                 "1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -695,7 +695,7 @@ int test_int_zero() {
         FILE *fp;
         char *contents = "name = 0;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -710,7 +710,7 @@ int test_int_negative() {
         FILE *fp;
         char *contents = "name = -1;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -726,7 +726,7 @@ int test_int_multiples() {
         char *contents = "name1 = 1;\n"
                 "name2 = 2;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(2));
         ASSERT(PM_manage(pm, "name1", INT_TYPE, 1));
         ASSERT(PM_manage(pm, "name2", INT_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
@@ -744,7 +744,7 @@ int test_real_no_decimal() {
         FILE *fp;
         char *contents = "name = 3;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", REAL_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -760,7 +760,7 @@ int test_real_multiples() {
         char *contents = "name1 = 3.3;\n"
                 "name2 = 4.4;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(2));
         ASSERT(PM_manage(pm, "name1", REAL_TYPE, 1));
         ASSERT(PM_manage(pm, "name2", REAL_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
@@ -778,7 +778,7 @@ int test_boolean_false() {
         FILE *fp;
         char *contents = "name = false;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -794,7 +794,7 @@ int test_boolean_multiples() {
         char *contents = "name1 = true;\n"
                 "name2 = false;";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(2));
         ASSERT(PM_manage(pm, "name1", BOOLEAN_TYPE, 1));
         ASSERT(PM_manage(pm, "name2", BOOLEAN_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
@@ -812,7 +812,7 @@ int test_string_spaces() {
         FILE *fp;
         char *contents = "name = \"   string   \";";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -828,7 +828,7 @@ int test_string_line_break() {
         FILE *fp;
         char *contents = "name = \"string\nmore\";";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -844,7 +844,7 @@ int test_string_single_quotes() {
         FILE *fp;
         char *contents = "name = \"'string'\";";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -860,7 +860,7 @@ int test_string_number() {
         FILE *fp;
         char *contents = "name = \"123\";";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -877,7 +877,7 @@ int test_string_multiples() {
         char *contents = "name1 = \"string1\";\n"
                 "name2 = \"string2\";";
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(2));
         ASSERT(PM_manage(pm, "name1", STRING_TYPE, 1));
         ASSERT(PM_manage(pm, "name2", STRING_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
@@ -898,7 +898,7 @@ int test_list_empty() {
         char *contents = "name = {};";
         char *str;
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -915,7 +915,7 @@ int test_list_many_values() {
         char *contents = "name = { \"string1\", \"string2\", \"string3\" };";
         char *str;
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -937,7 +937,7 @@ int test_list_spaces() {
         char *contents = "name = {   \"string1\"   ,   \"string2\"   };";
         char *str;
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -957,7 +957,7 @@ int test_list_no_spaces() {
         char *contents = "name = {\"string1\",\"string2\"};";
         char *str;
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -980,7 +980,7 @@ int test_list_line_breaks() {
                 "};";
         char *str;
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(1));
         ASSERT(PM_manage(pm, "name", LIST_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
         ASSERT(PM_hasValue(pm, "name"));
@@ -1003,7 +1003,7 @@ int test_list_multiples() {
                 "name2 = { \"string2\" };";
         char *str;
         fp = file_with_contents(contents);
-        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(pm = PM_create(2));
         ASSERT(PM_manage(pm, "name1", LIST_TYPE, 1));
         ASSERT(PM_manage(pm, "name2", LIST_TYPE, 1));
         ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
