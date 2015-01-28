@@ -27,6 +27,7 @@ void run_test(int (*fn)(), char *fn_name);
 /* Main functionality tests */
 int test_pm_create_destroy();
 int test_pm_create_destroy_twice();
+int test_pm_create_destroy_large_size();
 
 /* PM_manage optional value tests */
 int test_pm_manage_int_optional();

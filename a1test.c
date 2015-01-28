@@ -23,6 +23,14 @@ int test_pm_create_destroy_twice() {
         return 0;
 }
 
+int test_pm_create_destroy_large_size() {
+        ParameterManager *pm;
+        ASSERT(pm = PM_create(100));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
+        ASSERT(PM_destroy(pm));
+        return 0;
+}
+
 int test_pm_manage_int_optional() {
         ParameterManager *pm;
         ASSERT(pm = PM_create(1));
@@ -1043,6 +1051,7 @@ int main(int argc, char **argv) {
         /* Main functionality tests */
         run_test(test_pm_create_destroy, "test_pm_create_destroy");
         run_test(test_pm_create_destroy_twice, "test_pm_create_destroy_twice");
+        run_test(test_pm_create_destroy_large_size, "test_pm_create_destroy_large_size");
 
         /* PM_manage optional value tests */
         run_test(test_pm_manage_int_optional, "test_pm_manage_int_optional");
