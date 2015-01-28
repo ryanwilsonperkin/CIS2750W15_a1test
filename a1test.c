@@ -182,6 +182,76 @@ int test_pm_parse_list_optional() {
         return 0;
 }
 
+int test_pm_parse_int_optional_missing() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 0));
+        ASSERT(!PM_hasValue(pm, "name"));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_pm_parse_real_optional_missing() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", REAL_TYPE, 0));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(!PM_hasValue(pm, "name"));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_pm_parse_boolean_optional_missing() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", BOOLEAN_TYPE, 0));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(!PM_hasValue(pm, "name"));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_pm_parse_string_optional_missing() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", STRING_TYPE, 0));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(!PM_hasValue(pm, "name"));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_pm_parse_list_optional_missing() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", LIST_TYPE, 0));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(!PM_hasValue(pm, "name"));
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 int test_pm_parse_int_required() {
         ParameterManager *pm;
         FILE *fp;
@@ -305,6 +375,13 @@ int main(int argc, char **argv) {
         run_test(test_pm_parse_boolean_optional, "test_pm_parse_boolean_optional");
         run_test(test_pm_parse_string_optional, "test_pm_parse_string_optional");
         run_test(test_pm_parse_list_optional, "test_pm_parse_list_optional");
+
+        /* PM_parseFrom missing optional value tests */
+        run_test(test_pm_parse_int_optional_missing, "test_pm_parse_int_optional_missing");
+        run_test(test_pm_parse_real_optional_missing, "test_pm_parse_real_optional_missing");
+        run_test(test_pm_parse_boolean_optional_missing, "test_pm_parse_boolean_optional_missing");
+        run_test(test_pm_parse_string_optional_missing, "test_pm_parse_string_optional_missing");
+        run_test(test_pm_parse_list_optional_missing, "test_pm_parse_list_optional_missing");
 
         /* PM_parseFrom required value tests */
         run_test(test_pm_parse_int_required, "test_pm_parse_int_required");
