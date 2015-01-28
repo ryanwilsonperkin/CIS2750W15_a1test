@@ -100,4 +100,10 @@ int test_real_no_decimal();
 /* BOOLEAN_TYPE tests */
 int test_boolean_false();
 
+/* STRING_TYPE tests */
+int test_string_spaces();
+int test_string_line_break();
+int test_string_single_quotes();
+int test_string_number();
+
 #endif  /* A1TEST_A1TEST_H */

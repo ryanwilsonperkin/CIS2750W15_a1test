@@ -750,6 +750,70 @@ int test_boolean_false() {
         return 0;
 }
 
+int test_string_spaces() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = \"   string   \";";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").str_val != NULL);
+        ASSERT(strcmp(PM_getValue(pm, "name").str_val, "   string   ") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_string_line_break() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = \"string\nmore\";";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").str_val != NULL);
+        ASSERT(strcmp(PM_getValue(pm, "name").str_val, "string\nmore") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_string_single_quotes() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = \"'string'\";";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").str_val != NULL);
+        ASSERT(strcmp(PM_getValue(pm, "name").str_val, "'string'") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_string_number() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = \"123\";";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", STRING_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").str_val != NULL);
+        ASSERT(strcmp(PM_getValue(pm, "name").str_val, "123") == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 FILE *file_with_contents(char *contents) {
         FILE *fp = fopen(TEST_FILENAME, "w");
         fprintf(fp, contents);
@@ -844,6 +908,12 @@ int main(int argc, char **argv) {
 
         /* BOOLEAN_TYPE tests */
         run_test(test_boolean_false, "test_boolean_false");
+
+        /* STRING_TYPE tests */
+        run_test(test_string_spaces, "test_string_spaces");
+        run_test(test_string_line_break, "test_string_line_break");
+        run_test(test_string_single_quotes, "test_string_single_quotes");
+        run_test(test_string_number, "test_string_number");
 
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
