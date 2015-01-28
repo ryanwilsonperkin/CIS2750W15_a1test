@@ -690,6 +690,51 @@ int test_whitespace_multiline() {
         return 0;
 }
 
+int test_int_zero() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = 0;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == 0);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_int_negative() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = -1;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", INT_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT(PM_getValue(pm, "name").int_val == -1);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
+int test_real_no_decimal() {
+        ParameterManager *pm;
+        FILE *fp;
+        char *contents = "name = 3;";
+        fp = file_with_contents(contents);
+        ASSERT(pm = PM_create(DEFAULT_CREATE_VAL));
+        ASSERT(PM_manage(pm, "name", REAL_TYPE, 1));
+        ASSERT(PM_parseFrom(pm, fp, DEFAULT_COMMENT));
+        ASSERT(PM_hasValue(pm, "name"));
+        ASSERT((PM_getValue(pm, "name").real_val - 3) <= REAL_THRESHOLD);
+        ASSERT(PM_destroy(pm));
+        fclose(fp);
+        return 0;
+}
+
 FILE *file_with_contents(char *contents) {
         FILE *fp = fopen(TEST_FILENAME, "w");
         fprintf(fp, contents);
@@ -774,6 +819,13 @@ int main(int argc, char **argv) {
         run_test(test_whitespace_less, "test_whitespace_less");
         run_test(test_whitespace_none, "test_whitespace_none");
         run_test(test_whitespace_multiline, "test_whitespace_multiline");
+        
+        /* INT_VAL tests */
+        run_test(test_int_zero, "test_int_zero");
+        run_test(test_int_negative, "test_int_negative");
+
+        /* REAL_VAL tests */
+        run_test(test_real_no_decimal, "test_real_no_decimal");
 
         printf("\n[a1test] Number of tests run: %d\n", num_tests);
         printf("[a1test] Number of successes: %d\n", num_success);
