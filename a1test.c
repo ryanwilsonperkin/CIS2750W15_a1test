@@ -1154,9 +1154,10 @@ int main(int argc, char **argv) {
         run_test(test_comment_only, "test_comment_only");
         run_test(test_comment_inline, "test_comment_inline");
         run_test(test_comment_multiple, "test_comment_multiple");
+        run_test(test_comment_non_default, "test_comment_non_default");
         run_test(test_comment_before_semicolon, "test_comment_before_semicolon");
         run_test(test_comment_before_value, "test_comment_before_value");
-        run_test(test_comment_before_value, "test_comment_before_value");
+        run_test(test_comment_before_equals, "test_comment_before_equals");
         printf(ANSI_COLOR_YELLOW "[a1test][TEST SUITE]: %d/%d tests succeeded " ANSI_COLOR_RESET "\n\n", num_success_suite, num_tests_suite);
 
         /* Parse error tests */
